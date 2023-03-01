@@ -1,6 +1,5 @@
 function submit() {
     form = document.getElementById('form');
-
     while (form.firstChild) {
         form.removeChild(form.firstChild);
     }
@@ -29,26 +28,9 @@ function submit() {
             form.appendChild(span);
         }
         for (var j = 0; j < max_number; j++) {
-            var selectList = document.createElement("select");
-            selectList.id = "action" + i + "_" + (j + 1);
-            selectList.name = "action" + i + "_" + (j + 1);
-
-            var optionplus = document.createElement("option"); //optionplus
-            optionplus.value = 'plus';
-            optionplus.text = '+';
-            selectList.appendChild(optionplus);
-
-            var optionreduce = document.createElement("option"); //optionreduce
-            optionreduce.value = 'reduce';
-            optionreduce.text = '-';
-            selectList.appendChild(optionreduce);
-            form.appendChild(selectList);
-
-
-
             var input = document.createElement('input'); //创建input节点
             var spanx = document.createElement('span');
-            spanx.innerText = "x" + String(j + 1);
+            spanx.innerText = j==(max_number-1)?" x" + String(j + 1) : " x" + String(j + 1)+"  +  ";
             input.setAttribute('id', 'number' + i + '_' + (j + 1));
             input.setAttribute('name', 'number' + i + '_' + (j + 1));
             form.appendChild(input);
