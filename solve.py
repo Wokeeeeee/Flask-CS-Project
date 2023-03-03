@@ -1,6 +1,8 @@
 from fractions import Fraction
 import copy
 
+from scipy.optimize import optimize
+
 
 def format_date(target, matrix):
     '''
@@ -277,5 +279,3 @@ if __name__ == '__main__':
     d, s = solve(d)
     printSol(d, s)
 
-from scipy import optimize
-import numpy as np

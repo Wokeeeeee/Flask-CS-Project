@@ -3,6 +3,8 @@ import './App.css';
 import {BrowserRouter as Router, Routes, Route, Link, BrowserRouter} from "react-router-dom";
 import Rowcol from "./Rowcol";
 import React from "react";
+import PathPlaningPage from "./PathPlanning";
+import MaxStream from "./MaxStream";
 
 function App() {
     return (
@@ -10,6 +12,8 @@ function App() {
             <Routes>
                 <Route path="/simplex" element={<Rowcol/>}/>
                 <Route path="/" element={<Home/>}/>
+                <Route path="/path" element={<PathPlaningPage/>}/>
+                <Route path="/maxflow" element={<MaxStream/>}/>
             </Routes>
 
         </BrowserRouter>
@@ -19,7 +23,12 @@ function App() {
 function Home() {
     return (
         <nav>
-            <Link to="/simplex"> simplex</Link>
+            <div>
+                <Link to="/simplex"> simplex</Link>
+            </div>
+            <div>
+                <Link to="/path">path planing</Link>
+            </div>
         </nav>
     )
 }

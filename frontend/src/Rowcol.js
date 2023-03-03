@@ -76,16 +76,16 @@ class InputBox extends React.Component {
 
     init(props) {
         // 给target和matrix赋值
-/*        for (let i = 0; i < props.v_number; i++) {
-            this.state.target[i] = null
-            for (let j = 0; j < props.equ_number; j++) {
-                let tmp = new Array(props.v_number + 1)
-                for (let k = 0; k <= props.v_number; k++) {
-                    tmp[k] = null
-                }
-                this.state.matrix[j] = tmp
-            }
-        }*/
+        /*        for (let i = 0; i < props.v_number; i++) {
+                    this.state.target[i] = null
+                    for (let j = 0; j < props.equ_number; j++) {
+                        let tmp = new Array(props.v_number + 1)
+                        for (let k = 0; k <= props.v_number; k++) {
+                            tmp[k] = null
+                        }
+                        this.state.matrix[j] = tmp
+                    }
+                }*/
         this.state.target = [2, 3]
         this.state.matrix = [
             [2, 2, 12],
