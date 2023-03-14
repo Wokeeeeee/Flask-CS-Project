@@ -72,6 +72,21 @@ class InputBox extends React.Component {
         this.setState({edges: tmp}, () => console.log(this.state))
     }
 
+    addZeroWeightTuple(tuple) {
+        let result = []
+        for (let i in this.state.edges) {
+            let ele = tuple.filter((e) => {
+                return e.slice(0, -1).toString() === this.state.edges[i].slice(0, -1).toString()
+            })
+            if (ele.length === 0) {
+                result = [...result, [this.state.edges[i][0], this.state.edges[i][1], 0, this.state.edges[i][2]]]
+            } else {
+                result = [...result, [ele[0][0], ele[0][1], ele[0][2], this.state.edges[i][2]]]
+            }
+        }
+        return result
+    }
+
     upload() {
         let that = this
         if (this.state.edges.filter(
@@ -92,9 +107,9 @@ class InputBox extends React.Component {
                 'edges': this.state.edges
             })
                 .then(function (responses) {
-                    console.log(responses)
+                    console.log(that.addZeroWeightTuple(responses.data.tuple))
                     that.setState({
-                        tuple: responses.data.tuple,
+                        tuple: that.addZeroWeightTuple(responses.data.tuple),
                         result: responses.data.result
                     }, () => {
                         that.setState({is_received: true})
@@ -199,7 +214,9 @@ class VAG extends React.Component {
             let line = this.state.tuple[i]
             edges = [...edges,
                 {
-                    source: line[0], target: line[1], label: line[2]
+                    source: line[0],
+                    target: line[1],
+                    label: line.length === 3 ? line[2].toString() : (line[3] + "->" + line[2]).toString()
                 }]
         }
         return {
@@ -210,24 +227,6 @@ class VAG extends React.Component {
 
     componentDidMount() {
         let dataset = this.generateDataset()
-        /*let dataset = {
-            nodes: [
-                {id: 0, label: "流动人员", shape: "rect"},
-                {id: 1, label: "安全筛查", shape: "rect"},
-                {id: 2, label: "热像仪人体测温筛查", shape: "diamond"},
-                {id: 3, label: "人工复测", shape: "diamond"},
-                {id: 4, label: "快速通过", shape: "rect"},
-                {id: 5, label: "紧急处理", shape: "rect"}
-            ],
-            edges: [
-                {source: 0, target: 1, label: ""},
-                {source: 1, target: 2, label: ""},
-                {source: 2, target: 4, label: "正常"},
-                {source: 2, target: 3, label: "不正常"},
-                {source: 3, target: 5, label: "不正常"},
-                {source: 3, target: 4, label: "正常"}
-            ]
-        }*/
         let g = new dagreD3.graphlib.Graph().setGraph({
             rankdir: 'LR', // 流程图从左到右显示，npm 默认‘TB’
             align: 'UL', // 设置节点对齐方式为下左
@@ -247,7 +246,7 @@ class VAG extends React.Component {
         });
         let render = new dagreD3.render();
 // 选择 svg 并添加一个g元素作为绘图容器.
-        let svgGroup = d3.select('#'+ this.props.name).append('g');
+        let svgGroup = d3.select('#' + this.props.name).append('g');
 // 在绘图容器上运行渲染器生成流程图.
         render(svgGroup, g);
     }

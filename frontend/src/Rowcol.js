@@ -120,6 +120,7 @@ class InputBox extends React.Component {
             alert("not finish")
             return null;
         }
+        console.log(this.state)
         let that = this;
         axios.post('http://127.0.0.1:5000/simplex/direct', {
             'target': this.state.target,

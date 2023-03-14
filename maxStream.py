@@ -20,6 +20,17 @@ class MaxFlow:
         for o in origins:
             self.residual[o[0]][o[1]] = o[2]
 
+    def remove_inf(self):
+        return [int(x) if x != float('inf') else -1 for x in self.pre]
+
+    def deinit_residual(self):
+        tuple = []
+        for i in range(len(self.residual)):
+            for j in range(len(self.residual)):
+                if self.maxflowgraph[i][j] != 0:
+                    tuple.append([i, j, self.residual[i][j]])
+        return tuple
+
     def BFS(self, source, sink):
         self.q.empty()  # 清空队列
 
@@ -50,6 +61,7 @@ class MaxFlow:
     def maxflow(self, source, sink):
         sumflow = 0  # 记录最大流，一直累加
         augmentflow = 0  # 当前寻找到的增广路径的最小通过流量
+        residual_set = []
         while (True):
             augmentflow = self.BFS(source, sink)
             if (augmentflow == -1):
@@ -62,7 +74,11 @@ class MaxFlow:
                 self.residual[k][self.prev] += augmentflow  # 反向边
                 k = self.prev
             sumflow += augmentflow
-        return sumflow, self.maxflowgraph
+            residual_set.append([self.flow[sink], self.remove_inf(), self.deinit_residual()])
+            print("BFS:\n", self.flow[sink], self.pre)
+            print("residual\n", self.residual)
+        print("maxgraph\n", self.maxflowgraph)
+        return sumflow, self.maxflowgraph, residual_set
 
     def transferToTuple(self):
         '''
@@ -75,21 +91,20 @@ class MaxFlow:
                     tuple.append([i, j, self.maxflowgraph[i][j]])
         return tuple
 
-
-origins = [
-    [0, 1, 3],
-    [0, 2, 2],
-    [1, 2, 1],
-    [1, 3, 3],
-    [1, 4, 4],
-    [2, 4, 2],
-    [3, 5, 2],
-    [4, 5, 3]
-]
-
-max_flow = MaxFlow(6)
-max_flow.init_residual(origins)
-result, max_graph = max_flow.maxflow(0, 5)
-print(result)
-print(max_graph)  # 最大流图
-print(max_flow.transferToTuple())
+# origins = [
+#     [0, 1, 3],
+#     [0, 2, 2],
+#     [1, 2, 1],
+#     [1, 3, 3],
+#     [1, 4, 4],
+#     [2, 4, 2],
+#     [3, 5, 2],
+#     [4, 5, 3]
+# ]
+#
+# max_flow = MaxFlow(6)
+# max_flow.init_residual(origins)
+# result, max_graph = max_flow.maxflow(0, 5)
+# print(result)
+# print(max_graph)  # 最大流图
+# print(max_flow.transferToTuple())

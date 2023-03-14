@@ -5,6 +5,8 @@ import Rowcol from "./Rowcol";
 import React from "react";
 import PathPlaningPage from "./PathPlanning";
 import MaxStream from "./MaxStream";
+import Transportation from "./Transportation"
+import CounterPage from "./Counter"
 
 function App() {
     return (
@@ -14,7 +16,8 @@ function App() {
                 <Route path="/" element={<Home/>}/>
                 <Route path="/path" element={<PathPlaningPage/>}/>
                 <Route path="/maxflow" element={<MaxStream/>}/>
-            </Routes>
+                <Route path="/transportation" element={<Transportation/>}/>
+                <Route path="/counter" element={<CounterPage/>}/> </Routes>
 
         </BrowserRouter>
     );
@@ -28,6 +31,15 @@ function Home() {
             </div>
             <div>
                 <Link to="/path">path planing</Link>
+            </div>
+            <div>
+                <Link to="/maxflow">max flow</Link>
+            </div>
+            <div>
+                <Link to="/transportation">transportation</Link>
+            </div>
+            <div>
+                <Link to="/counter">cpunter</Link>
             </div>
         </nav>
     )
